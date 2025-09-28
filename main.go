@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -58,15 +59,25 @@ func sum() {
 
 func med() {
 	numbers := numberInput()
-	var sum float64
-	for _, number := range numbers {
-		sum += number
+
+	sort.Float64s(numbers)
+
+	n := len(numbers)
+	if n == 0 {
+		fmt.Println("Медиана: нет данных")
+		return
 	}
-	if len(numbers)%2 == 0 {
-		fmt.Printf("Медиана: %.2f\n", (numbers[len(numbers)/2-1]+numbers[len(numbers)/2])/2)
+
+	var median float64
+	if n%2 == 0 {
+		// Для четного количества: среднее двух центральных элементов
+		median = (numbers[n/2-1] + numbers[n/2]) / 2
 	} else {
-		fmt.Printf("Медиана: %.2f\n", numbers[len(numbers)/2])
+		// Для нечетного количества: центральный элемент
+		median = numbers[n/2]
 	}
+
+	fmt.Printf("Медиана: %.2f\n", median)
 }
 
 func numberInput() []float64 {
