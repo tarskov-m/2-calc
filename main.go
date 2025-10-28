@@ -7,20 +7,19 @@ import (
 	"strings"
 )
 
+var operations =  map[string]func(){
+	"AVG": avg,
+	"SUM": sum,
+	"MED": med,
+}
+
 func main() {
 	// Принимает операцию (AVG - среднее, SUM - сумму, MED - медиану)
-	switch op := readOperation(); op {
-	case "AVG":
-		// считает среднее
-		avg()
-	case "SUM":
-		// считает сумму
-		sum()
-	case "MED":
-		// считает медиану
-		med()
-	default:
-		break
+	op := readOperation()
+	if opFunc, ok := operations[op]; ok {
+		opFunc()
+	} else {
+		fmt.Println("Неизвестная операция")
 	}
 }
 
